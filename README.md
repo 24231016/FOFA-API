@@ -7,7 +7,9 @@ use Pyfofa API to search and dump as csv,html
 #輸入FOFA email&API Key
 
 #因fofa網域有變，需至pyfofa套件庫中的api.py，更改self.base_url至最新
+
 (可利用 pip3 show pyfofa 查看套件位置)
+
 所需套件 pyfofa, time, csv, pandas
 
 # 程式執行畫面
