@@ -15,5 +15,5 @@ use Pyfofa API to search and dump as csv,html
 # 程式執行畫面
 ![image](https://user-images.githubusercontent.com/31869213/173482410-fbda1f32-ef3a-4043-b94c-8eaa5e716e4d.png)
 
-# 可產出CSV及HTML格式
+# 可產出HTML及CSV格式
 ![image](https://user-images.githubusercontent.com/31869213/173482617-a61a8dae-f9fc-48a7-8fc3-e9d4417af3c1.png)
