@@ -30,12 +30,19 @@ def search():
         exit(1)
     search_fofa = input("\n請輸入關鍵字 :")    
     keyword = str(search_fofa).split("\"")
-    if len(keyword) > 1:
-        f = open("./output/%s_%s.csv"%(keyword[1],time.strftime("%m月%d日%H%M", time.localtime())),'w',encoding='utf_8_sig',newline='')
-        doc = open("./output/%s_%s.html"%(keyword[1],time.strftime("%m月%d日%H%M", time.localtime())), "a+" ,encoding="UTF-8")
-    else:
-        f = open("./output/%s_%s.csv"%(search_fofa,time.strftime("%m月%d日%H%M", time.localtime())),'w',encoding='utf_8_sig',newline='')
-        doc = open("./output/%s_%s.html"%(keyword[1],time.strftime("%m月%d日%H%M", time.localtime())), "a+" ,encoding="UTF-8")
+    try:
+        if len(keyword) > 1:
+            f = open("./output/%s_%s.csv"%(keyword[1],time.strftime("%m月%d日%H%M", time.localtime())),'w',encoding='utf_8_sig',newline='')
+            doc = open("./output/%s_%s.html"%(keyword[1],time.strftime("%m月%d日%H%M", time.localtime())), "a+" ,encoding="UTF-8")
+            urltxt = open("./output/%s_%s.txt"%(keyword[1],time.strftime("%m月%d日%H%M", time.localtime())),'w' ,encoding="UTF-8")
+        else:
+            f = open("./output/%s_%s.csv"%(search_fofa,time.strftime("%m月%d日%H%M", time.localtime())),'w',encoding='utf_8_sig',newline='')
+            doc = open("./output/%s_%s.html"%(search_fofa,time.strftime("%m月%d日%H%M", time.localtime())), "a+" ,encoding="UTF-8")
+            urltxt = open("./output/%s_%s.txt"%(search_fofa,time.strftime("%m月%d日%H%M", time.localtime())),'w' ,encoding="UTF-8")
+    except:
+        f = open("./output/%s.csv"%(time.strftime("%m月%d日%H%M", time.localtime())),'w',encoding='utf_8_sig',newline='')
+        doc = open("./output/%s.html"%(time.strftime("%m月%d日%H%M", time.localtime())), "a+" ,encoding="UTF-8")
+        urltxt = open("./output/%s.txt"%(time.strftime("%m月%d日%H%M", time.localtime())),'w' ,encoding="UTF-8")
     try:
         doc.write(html1)
         size = search.get_data(search_fofa)['size']        
@@ -58,8 +65,11 @@ def search():
             except:                
                 pass
             for host,title in search.get_data(search_fofa, page,"host,title")['results']:
-                if host.find('https'):
-                    host = "http://" + host               
+                if host.find('http'):
+                    host = "http://" + host          
+                if title == '':
+                    title = host
+                urltxt.write(host+'\n')
                 body = """<br>            
                 <a href="%s" target="_blank">%s  </a>    
                 """%(host,title)
@@ -76,6 +86,7 @@ def search():
         </html>"""
         doc.write(html2)
         doc.close()
+        urltxt.close()
     except Exception as e:
         print(e)
         print("\n請檢查關鍵字或是頁數是否正確")
